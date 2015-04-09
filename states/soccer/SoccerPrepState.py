@@ -1,4 +1,4 @@
-from states.soccer import BallScanState
+from states.soccer.BallScanState import BallScanState
 
 
 class SoccerPrepState:
