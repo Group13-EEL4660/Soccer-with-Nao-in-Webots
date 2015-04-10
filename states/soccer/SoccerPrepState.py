@@ -7,5 +7,5 @@ class SoccerPrepState:
 
     def run(self, parent):
         parent.motion.wakeUp()
-        parent.posture.goToPosture("StandInit", 0.5)
+        parent.robotPosture.goToPosture("StandInit", 0.5)
         parent.nextState(BallScanState())

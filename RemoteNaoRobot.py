@@ -1,30 +1,7 @@
 
 
 class RemoteNaoRobot:
-    class NaoRobotBuilder:
-        def __init__(self):
-            self.motion = None
-            self.robotPosture = None
-            self.videoDevice = None
-
-        def setMotion(self, motion):
-            self.motion = motion
-            return self
-
-        def setRobotPosture(self, robotPosture):
-            self.robotPosture = robotPosture
-            return self
-
-        def setVideoDevice(self, videoDevice):
-            self.videoDevice = videoDevice
-            return self
-
-        def build(self):
-            return RemoteNaoRobot(self.motion,
-                                  self.robotPosture,
-                                  self.videoDevice)
-
-    def __init__(self, motion, robotPosture, videoDevice):
+    def __init__(self, motion=None, robotPosture=None, videoDevice=None):
         self.motion = motion
         self.robotPosture = robotPosture
         self.videoDevice = videoDevice

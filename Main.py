@@ -6,11 +6,9 @@ from naoqi import ALProxy
 
 def main():
     # Create the robot with the specified components
-    mainRobot = RemoteNaoRobot.NaoRobotBuilder\
-        .setMotion(ALProxy("ALMotion", "127.0.0.1", 9560))\
-        .setRobotPosture(ALProxy("ALRobotPosture", "127.0.0.1", 9560))\
-        .setVideoDevice(ALProxy("ALVideoDevice", "127.0.0.1", 9560))\
-        .build()
+    mainRobot = RemoteNaoRobot(motion=ALProxy("ALMotion", "127.0.0.1", 9560),
+                               robotPosture=ALProxy("ALRobotPosture", "127.0.0.1", 9560),
+                               videoDevice=ALProxy("ALVideoDevice", "127.0.0.1", 9560))
 
     taskSubmitter = TaskSubmitter(mainRobot)
     taskSubmitter.startNewTask(SoccerPrepState())
