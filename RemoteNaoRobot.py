@@ -1,22 +1,44 @@
-from naoqi import ALProxy
-import threading
 
 
 class RemoteNaoRobot:
-    def __init__(self, ip, port):
-        self.motion = ALProxy("ALMotion", ip, port)
-        self.posture = ALProxy("ALRobotPosture", ip, port)
-        self.video = ALProxy("ALVideoDevice", ip, port)
+    class NaoRobotBuilder:
+        def __init__(self):
+            self.motion = None
+            self.robotPosture = None
+            self.videoDevice = None
+
+        def setMotion(self, motion):
+            self.motion = motion
+            return self
+
+        def setRobotPosture(self, robotPosture):
+            self.robotPosture = robotPosture
+            return self
+
+        def setVideoDevice(self, videoDevice):
+            self.videoDevice = videoDevice
+            return self
+
+        def build(self):
+            return RemoteNaoRobot(self.motion,
+                                  self.robotPosture,
+                                  self.videoDevice)
+
+    def __init__(self, motion, robotPosture, videoDevice):
+        self.motion = motion
+        self.robotPosture = robotPosture
+        self.videoDevice = videoDevice
         self.currentState = None
-        self.isRunning = True
+        self.stopped = False
 
     # Called when start() is called from outside class.
     def run(self):
-        while self.isRunning is True:
+        self.stopped = False
+        while self.stopped is False:
             self.currentState.run(self)
 
     def nextState(self, state):
         self.currentState = state
 
     def stop(self):
-        self.isRunning = False
+        self.stopped = True
