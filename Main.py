@@ -19,18 +19,14 @@ def main():
             NaoImageProcessor(
                 TemplateMatchingObjectDetector(),
                 ALProxy("ALVideoDevice", "127.0.0.1", 9560),
-                cameraFPS=5
+                cameraFPS=20
             ),
             ALProxy("ALMotion", "127.0.0.1", 9560),
             ALProxy("ALRobotPosture", "127.0.0.1", 9560),
             ballQueryImage
         )
     )
-    print("waiting")
     threadedTaskSubmitter.waitTask()
-    print("done waiting")
-    #print("Started new task")
-    #threadedTaskSubmitter.stopTask()
 
 
 if __name__ == "__main__":

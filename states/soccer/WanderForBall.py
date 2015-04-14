@@ -6,7 +6,7 @@ from AlignBallWithGoal import AlignBallWithGoal
 class WanderForBall:
     def __init__(self):
         self.__isExecuting = False
-        self.__headMovementID = 0
+        self.__headMovementID = None
 
     def run(self, parent):
         print("WanderForBall")
@@ -48,6 +48,10 @@ class WanderForBall:
                         self.__isExecuting = False
             else:
                 # Ball is in the bottom camera's view, so go to BottomCameraState
+                if self.__headMovementID is not None:
+                    parent.motion.stop(self.__headMovementID)
                 parent.nextState(AlignBallWithGoal())
         else:
+            if self.__headMovementID is not None:
+                parent.motion.stop(self.__headMovementID)
             parent.nextState(FollowBall())

@@ -47,7 +47,8 @@ class NaoImageProcessor:
             # camera index not in the dictionary
             print("KEY ERROR")
             return None
-        image = self.toNPArray(self.videoDevice.getImageRemote(cameraID))
+        naoImage = self.videoDevice.getImageRemote(cameraID)
+        image = self.toNPArray(naoImage)
 
         return self.objectDetector.objectLocationInImage(image, queryImg, threshold, True)
 

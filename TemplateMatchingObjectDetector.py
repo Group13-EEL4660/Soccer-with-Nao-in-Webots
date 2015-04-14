@@ -2,7 +2,8 @@ import cv2
 
 
 class TemplateMatchingObjectDetector():
-    def __init__(self):
+    def __init__(self, queryThresholdDict):
+        self.queryThresholdDict = queryThresholdDict
         pass
 
     def objectLocationInImage(self, image, queryImage, threshold, centroid=False):
