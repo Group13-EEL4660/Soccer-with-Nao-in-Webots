@@ -10,20 +10,19 @@ class WanderForBall:
 
     def run(self, parent):
         print("WanderForBall")
-        threshold = 0.9999
         # Check if the ball is in the top camera
         topCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
             vision_definitions.kTopCamera,
-            parent.ballQueryImage,
-            threshold
+            parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][0],
+            parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][1]
         )
 
         if topCameraBallLoc is None:
             # Check if the ball is in the bottom camera's view
             bottomCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
                 vision_definitions.kBottomCamera,
-                parent.ballQueryImage,
-                threshold
+                parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][0],
+                parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][1]
             )
             if bottomCameraBallLoc is None:
                 if self.__isExecuting is False:
@@ -31,7 +30,7 @@ class WanderForBall:
                     # Interpolate head left then right.
                     names = ["HeadYaw"]
                     angleLists = [-2.0, 2.0, 0.0]  # Turn right to -2 radians then left to 2 radians
-                    timeLists = [1.0, 3.0, 4.0]
+                    timeLists = [5.0, 10.0, 15.0]
                     self.__headMovementID = parent.motion.post.angleInterpolation(
                         names,
                         angleLists,

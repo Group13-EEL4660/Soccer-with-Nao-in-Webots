@@ -8,12 +8,10 @@ class SoccerTask:
                  imageProcessor,
                  motion,
                  robotPosture,
-                 ballQueryImage,
                  startState=PrepareToPlay()):
         self.imageProcessor = imageProcessor
         self.motion = motion
         self.robotPosture = robotPosture
-        self.ballQueryImage = ballQueryImage
         self.currentState = startState
         self.__stopped = False
         # Subscribe to needed camera feeds
@@ -32,7 +30,10 @@ class SoccerTask:
             priorTime = time.time()
             self.currentState.run(self)
             # Allows for a steady rate for self.currentState.run() to be called at.
-            time.sleep((1.0 / self.imageProcessor.cameraFPS) - (time.time() - priorTime))
+            sleepTime = (1.0 / self.imageProcessor.cameraFPS) - (time.time() - priorTime)
+            if sleepTime > 0.0:
+                time.sleep(sleepTime)
+        self.__stopped = False
 
     def stop(self):
         print("Stopped made True")

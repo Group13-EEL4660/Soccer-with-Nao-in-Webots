@@ -17,13 +17,12 @@ def main():
     threadedTaskSubmitter.startNewTask(
         SoccerTask(
             NaoImageProcessor(
-                TemplateMatchingObjectDetector(),
+                TemplateMatchingObjectDetector({"Ball": (ballQueryImage, 0.9999)}),
                 ALProxy("ALVideoDevice", "127.0.0.1", 9560),
                 cameraFPS=20
             ),
             ALProxy("ALMotion", "127.0.0.1", 9560),
-            ALProxy("ALRobotPosture", "127.0.0.1", 9560),
-            ballQueryImage
+            ALProxy("ALRobotPosture", "127.0.0.1", 9560)
         )
     )
     threadedTaskSubmitter.waitTask()
