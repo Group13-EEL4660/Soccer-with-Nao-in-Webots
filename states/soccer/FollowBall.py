@@ -26,8 +26,11 @@ class FollowBall:
                                                      [topCameraBallLoc[0], topCameraBallLoc[1]])
             if self.headID is not None:
                 parent.motion.stop(self.headID)
-            self.headID = parent.motion.post.changeAngles(
-                    ["HeadYaw", "HeadPitch"], [headAnglesToBall[0], headAnglesToBall[1]], 0.1
+            self.headID = parent.motion.post.angleInterpolation(
+                ["HeadYaw", "HeadPitch"],
+                [headAnglesToBall[0], headAnglesToBall[1]],
+                1.0,
+                False
             )
         else:
             bottomCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
