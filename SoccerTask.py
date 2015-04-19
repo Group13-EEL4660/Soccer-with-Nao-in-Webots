@@ -12,10 +12,12 @@ class SoccerTask:
                  imageProcessor,
                  motion,
                  robotPosture,
+                 goalPosition,
                  startState=PrepareToPlay()):
         self.imageProcessor = imageProcessor
         self.motion = motion
         self.robotPosture = robotPosture
+        self.goalPosition = goalPosition
         self.currentState = startState
         self.__stopped = False
         # Subscribe to needed camera feeds

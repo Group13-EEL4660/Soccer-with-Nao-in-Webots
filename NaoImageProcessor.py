@@ -38,19 +38,22 @@ class NaoImageProcessor:
     def isSubscribed(self, cameraIndex):
         return cameraIndex in self.cameraIndexToIDDict
 
-    # Returns the location of the object's centroid in the query image
-    # if it is present. If it is not in the image, then None is returned.
-    def objectLocationInCamera(self, cameraIndex, queryImg, threshold):
+    def getImageFromCamera(self, cameraIndex):
         try:
             cameraID = self.cameraIndexToIDDict[cameraIndex]
         except KeyError:
             # camera index not in the dictionary
-            print("KEY ERROR")
             return None
-        naoImage = self.videoDevice.getImageRemote(cameraID)
-        image = self.toNPArray(naoImage)
+        return self.toNPArray(self.videoDevice.getImageRemote(cameraID))
 
-        return self.objectDetector.objectLocationInImage(image, queryImg, threshold, True)
+    def objectLocationInImage(self, image, objectString, centroid):
+        return self.objectDetector.objectLocationInImage(image, objectString, centroid)
+
+    # Returns the location of the object's centroid in the query image
+    # if it is present. If it is not in the image, then None is returned.
+    def objectLocationInCamera(self, cameraIndex, objectString):
+        image = self.getImageFromCamera(cameraIndex)
+        return self.objectLocationInImage(image, objectString, True)
 
     def toNPArray(self, naoImage, colorSpaceStr="RGB"):
         imgWidth = naoImage[0]   # width

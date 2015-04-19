@@ -1,5 +1,6 @@
 import vision_definitions
 from StateEnums import StateEnums
+import math
 
 
 class FollowBall:
@@ -8,17 +9,18 @@ class FollowBall:
 
     def run(self, parent):
         print("Follow Ball")
-        # Step 1 - Get yaw and pitch angles between head and ball
-        # Step 2 - Set the head's angles accordingly
-        # Step 3 - Get the yaw angle between the body and the head
-        # Apply that angle to the moveToward function
+        topImage = parent.imageProcessor.getImageFromCamera(vision_definitions.kTopCamera)
 
+        # Check for an obstacle in the top camera (i.e. another robot in the way).
+        # If none, then continue to the ball. If there is an obstacle determine whether
+        # it is on the right or left and move opposite to it
+
+        topCameraBallLoc = parent.imageProcessor.objectLocationInImage(topImage, "Ball", True)
         # Check if the ball is in the top camera
-        topCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
-            vision_definitions.kTopCamera,
-            parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][0],
-            parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][1]
-        )
+        # topCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
+        #     vision_definitions.kTopCamera,
+        #     "Ball"
+        # )
 
         if topCameraBallLoc is not None:
             headAnglesToBall = parent.imageProcessor.videoDevice\
@@ -29,16 +31,21 @@ class FollowBall:
             self.headID = parent.motion.post.angleInterpolation(
                 ["HeadYaw", "HeadPitch"],
                 [headAnglesToBall[0], headAnglesToBall[1]],
-                1.0,
+                0.6,
                 False
             )
+            # Gets the yaw angle of the head according to the sensor angles
+            headYawAngle = parent.motion.getAngles("HeadYaw", False)
+            # Apply a velocity in the direction the head is turned
+            parent.motion.moveToward(1.0, 0.0, headYawAngle[0]/math.pi, [["Frequency", 1.0]])
         else:
             bottomCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
                 vision_definitions.kBottomCamera,
-                parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][0],
-                parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][1]
+                "Ball"
             )
             if bottomCameraBallLoc is not None:
+                parent.motion.stopMove()    # Stop moving
                 parent.nextState(StateEnums.ALIGN_BALL_WITH_GOAL)
             else:
-                parent.nextState(StateEnums.FOLLOW_BALL)
+                parent.motion.stopMove()    # Stop moving
+                parent.nextState(StateEnums.WANDER_FOR_BALL)

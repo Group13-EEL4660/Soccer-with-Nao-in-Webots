@@ -12,16 +12,14 @@ class WanderForBall:
         # Check if the ball is in the top camera
         topCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
             vision_definitions.kTopCamera,
-            parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][0],
-            parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][1]
+            "Ball"
         )
 
         if topCameraBallLoc is None:
             # Check if the ball is in the bottom camera's view
             bottomCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
                 vision_definitions.kBottomCamera,
-                parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][0],
-                parent.imageProcessor.objectDetector.queryThresholdDict["Ball"][1]
+                "Ball"
             )
             if bottomCameraBallLoc is None:
                 if self.__isExecuting is False:

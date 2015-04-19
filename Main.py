@@ -22,7 +22,8 @@ def main():
                 cameraFPS=20
             ),
             ALProxy("ALMotion", "127.0.0.1", 9560),
-            ALProxy("ALRobotPosture", "127.0.0.1", 9560)
+            ALProxy("ALRobotPosture", "127.0.0.1", 9560),
+            (3.0, 0.0)
         )
     )
     threadedTaskSubmitter.waitTask()
