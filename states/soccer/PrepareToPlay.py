@@ -1,4 +1,4 @@
-from states.soccer.WanderForBall import WanderForBall
+from StateEnums import StateEnums
 
 
 class PrepareToPlay:
@@ -17,4 +17,4 @@ class PrepareToPlay:
         if parent.motion.isRunning(self.__wakeUpID) is False and\
             parent.robotPosture.isRunning(self.__postureID) is False:
             # The call to goToPosture has finished, so the state can now be changed
-            parent.nextState(WanderForBall())
+            parent.nextState(StateEnums.WANDER_FOR_BALL)

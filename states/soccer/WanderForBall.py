@@ -1,6 +1,5 @@
 import vision_definitions
-from FollowBall import FollowBall
-from AlignBallWithGoal import AlignBallWithGoal
+from StateEnums import StateEnums
 
 
 class WanderForBall:
@@ -49,8 +48,8 @@ class WanderForBall:
                 # Ball is in the bottom camera's view, so go to BottomCameraState
                 if self.__headMovementID is not None:
                     parent.motion.stop(self.__headMovementID)
-                parent.nextState(AlignBallWithGoal())
+                parent.nextState(StateEnums.ALIGN_BALL_WITH_GOAL)
         else:
             if self.__headMovementID is not None:
                 parent.motion.stop(self.__headMovementID)
-            parent.nextState(FollowBall())
+            parent.nextState(StateEnums.FOLLOW_BALL)
