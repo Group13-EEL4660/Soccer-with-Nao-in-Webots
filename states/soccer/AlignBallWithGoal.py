@@ -1,5 +1,7 @@
 import numpy as np
 import math
+from StateEnums import StateEnums
+
 
 class AlignBallWithGoal:
     def __init__(self):
@@ -15,9 +17,25 @@ class AlignBallWithGoal:
         robotPosition = parent.motion.getRobotPosition(True)
         robotPos2D = (robotPosition[0], robotPosition[2])
         vectorToGoal = np.subtract(parent.goalPosition, robotPos2D)
-        unitVectorToGoal = np.divide(vectorToGoal,
-                                     math.sqrt(math.pow(vectorToGoal[0], 2) +
-                                               math.pow(vectorToGoal[1], 2)))
+        distanceToGoal = math.sqrt(math.pow(vectorToGoal[0], 2) +
+                                   math.pow(vectorToGoal[1], 2))
+        unitVectorToGoal = np.divide(vectorToGoal, distanceToGoal)
         direction = math.atan(unitVectorToGoal[1] / unitVectorToGoal[0])
         normDirection = direction / math.pi
-        print normDirection
+        headYawAngle = parent.motion.getAngles("HeadYaw", True)
+        print normDirection, headYawAngle
+        error = 0.1
+        deltaAngle = normDirection - headYawAngle[0]
+        if deltaAngle > error:
+            parent.motion.moveToward(0.0, 1.0, -0.2, [["Frequency", 1.0]])  # Move right, rotate left
+        elif deltaAngle < -error:
+            parent.motion.moveToward(0.0, -1.0, 0.2, [["Frequency", 1.0]])  # Move left, rotate right
+        else:
+            # Aligned with ball. Check distance from goal to see if robot
+            # should attempt to kick ball into the goal. If not in radius, then
+            # just walk into the ball to move it closer.
+            if distanceToGoal < 10.0:
+                # Kick
+                parent.nextState(StateEnums.KICK_BALL)
+            else:
+                parent.motion.moveToward(1.0, 0.0, 0.0, [["Frequency", 1.0]])

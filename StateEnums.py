@@ -6,3 +6,4 @@ class StateEnums(Enum):
     WANDER_FOR_BALL = 1
     FOLLOW_BALL = 2
     ALIGN_BALL_WITH_GOAL = 3
+    KICK_BALL = 4

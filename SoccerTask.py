@@ -3,6 +3,7 @@ from states.soccer.PrepareToPlay import PrepareToPlay
 from states.soccer.WanderForBall import WanderForBall
 from states.soccer.FollowBall import FollowBall
 from states.soccer.AlignBallWithGoal import AlignBallWithGoal
+from states.soccer.KickBall import KickBall
 import vision_definitions
 import time
 
@@ -37,6 +38,8 @@ class SoccerTask:
             self.currentState = FollowBall()
         elif state == StateEnums.ALIGN_BALL_WITH_GOAL:
             self.currentState = AlignBallWithGoal()
+        elif state == StateEnums.KICK_BALL:
+            self.currentState = KickBall()
 
     def run(self):
         self.__stopped = False
