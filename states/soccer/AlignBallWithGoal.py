@@ -15,21 +15,25 @@ class AlignBallWithGoal:
         # and stopping the robots rotation around the ball when its direction
         # matches the direction of the vector within a certain delta.
         robotPosition = parent.motion.getRobotPosition(True)
-        robotPos2D = (robotPosition[0], robotPosition[2])
-        vectorToGoal = np.subtract(parent.goalPosition, robotPos2D)
+        vectorToGoal = np.subtract(parent.goalPosition, tuple(robotPosition[0], robotPosition[1]))
         distanceToGoal = math.sqrt(math.pow(vectorToGoal[0], 2) +
                                    math.pow(vectorToGoal[1], 2))
         unitVectorToGoal = np.divide(vectorToGoal, distanceToGoal)
         direction = math.atan(unitVectorToGoal[1] / unitVectorToGoal[0])
         normDirection = direction / math.pi
         headYawAngle = parent.motion.getAngles("HeadYaw", True)
-        print normDirection, headYawAngle
+        print("Robot pos:" + str(robotPosition))
+        print("Vector to goal: " + str(vectorToGoal))
+        print("Distance to goal: " + str(distanceToGoal))
+        print("Head yaw angle: " + str(headYawAngle))
+        print("Absolute angle theta: " + str(robotPosition[2]))
+        print normDirection
         error = 0.1
         deltaAngle = normDirection - headYawAngle[0]
         if deltaAngle > error:
-            parent.motion.moveToward(0.0, 1.0, -0.2, [["Frequency", 1.0]])  # Move right, rotate left
+            parent.motion.moveToward(0.0, 1.0, -0.25, [["Frequency", 1.0]])  # Move right, rotate left
         elif deltaAngle < -error:
-            parent.motion.moveToward(0.0, -1.0, 0.2, [["Frequency", 1.0]])  # Move left, rotate right
+            parent.motion.moveToward(0.0, -1.0, 0.25, [["Frequency", 1.0]])  # Move left, rotate right
         else:
             # Aligned with ball. Check distance from goal to see if robot
             # should attempt to kick ball into the goal. If not in radius, then

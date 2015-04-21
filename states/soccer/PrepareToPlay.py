@@ -9,6 +9,8 @@ class PrepareToPlay:
 
     def run(self, parent):
         print("PrepareToPlay")
+        pos = parent.motion.getRobotPosition(True)
+        print pos
         if self.__hasStarted is False:
             self.__wakeUpID = parent.motion.post.wakeUp()
             self.__postureID = parent.robotPosture.post.goToPosture("StandInit", 0.5)
