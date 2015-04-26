@@ -22,12 +22,12 @@ class SoccerTask:
         self.currentState = startState
         self.__stopped = False
         # Subscribe to needed camera feeds
-        self.imageProcessor.subscribe(vision_definitions.kTopCamera)
-        self.imageProcessor.subscribe(vision_definitions.kBottomCamera)
+        self.imageProcessor.subscribe(0)#vision_definitions.kTopCamera)
+        self.imageProcessor.subscribe(1)#vision_definitions.kBottomCamera)
 
     def __del__(self):
-        self.imageProcessor.unsubscribe(vision_definitions.kTopCamera)
-        self.imageProcessor.unsubscribe(vision_definitions.kBottomCamera)
+        self.imageProcessor.unsubscribe(0)#vision_definitions.kTopCamera)
+        self.imageProcessor.unsubscribe(1)#vision_definitions.kBottomCamera)
 
     def nextState(self, state):
         if state == StateEnums.PREPARE_TO_PLAY:
@@ -46,7 +46,6 @@ class SoccerTask:
         while self.__stopped is False:
             priorTime = time.time()
             self.currentState.run(self)
-            #self.nextState(nextState)
             # Allows for a steady rate for self.currentState.run() to be called at.
             sleepTime = (1.0 / self.imageProcessor.cameraFPS) - (time.time() - priorTime)
             if sleepTime > 0.0:

@@ -9,7 +9,7 @@ class FollowBall:
 
     def run(self, parent):
         print("Follow Ball")
-        topImage = parent.imageProcessor.getImageFromCamera(vision_definitions.kTopCamera)
+        topImage = parent.imageProcessor.getImageFromCamera(0)#vision_definitions.kTopCamera)
 
         # Check for an obstacle in the top camera (i.e. another robot in the way).
         # If none, then continue to the ball. If there is an obstacle determine whether
@@ -24,7 +24,7 @@ class FollowBall:
 
         if topCameraBallLoc is not None:
             headAnglesToBall = parent.imageProcessor.videoDevice\
-                .getAngularPositionFromImagePosition(vision_definitions.kTopCamera,
+                .getAngularPositionFromImagePosition(0,#vision_definitions.kTopCamera,
                                                      [topCameraBallLoc[0], topCameraBallLoc[1]])
             if self.headID is not None:
                 parent.motion.stop(self.headID)
@@ -40,7 +40,7 @@ class FollowBall:
             parent.motion.moveToward(1.0, 0.0, headYawAngle[0]/math.pi, [["Frequency", 1.0]])
         else:
             bottomCameraBallLoc = parent.imageProcessor.objectLocationInCamera(
-                vision_definitions.kBottomCamera,
+                1,#vision_definitions.kBottomCamera,
                 "Ball"
             )
             if bottomCameraBallLoc is not None:
