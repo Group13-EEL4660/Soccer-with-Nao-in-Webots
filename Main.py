@@ -11,13 +11,14 @@ import time
 def main():
     # Load query images
     ballQueryImage = cv2.imread("./query_images/ball_query.png", cv2.IMREAD_COLOR)
-
+    goalQueryImage = cv2.imread("./query_images/goal_query.png", cv2.IMREAD_COLOR)
     # Create the robot with the specified components
     threadedTaskSubmitter = ThreadedTaskSubmitter(TaskSubmitter())
     threadedTaskSubmitter.startNewTask(
         SoccerTask(
             NaoImageProcessor(
-                TemplateMatchingObjectDetector({"Ball": (ballQueryImage, 0.9999)}),
+                TemplateMatchingObjectDetector({"Ball": (ballQueryImage, 0.9999),
+                                                "Goal": (goalQueryImage, 0.9999)}),
                 ALProxy("ALVideoDevice", "127.0.0.1", 9560),
                 cameraFPS=20
             ),

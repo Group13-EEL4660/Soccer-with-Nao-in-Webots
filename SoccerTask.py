@@ -2,9 +2,10 @@ from StateEnums import StateEnums
 from states.soccer.PrepareToPlay import PrepareToPlay
 from states.soccer.WanderForBall import WanderForBall
 from states.soccer.FollowBall import FollowBall
+from states.soccer.ApproachBall import ApproachBall
 from states.soccer.AlignBallWithGoal import AlignBallWithGoal
 from states.soccer.KickBall import KickBall
-import vision_definitions
+from states.soccer.DribbleBall import DribbleBall
 import time
 
 
@@ -22,12 +23,12 @@ class SoccerTask:
         self.currentState = startState
         self.__stopped = False
         # Subscribe to needed camera feeds
-        self.imageProcessor.subscribe(0)#vision_definitions.kTopCamera)
-        self.imageProcessor.subscribe(1)#vision_definitions.kBottomCamera)
+        self.imageProcessor.subscribe(0)
+        self.imageProcessor.subscribe(1)
 
     def __del__(self):
-        self.imageProcessor.unsubscribe(0)#vision_definitions.kTopCamera)
-        self.imageProcessor.unsubscribe(1)#vision_definitions.kBottomCamera)
+        self.imageProcessor.unsubscribe(0)
+        self.imageProcessor.unsubscribe(1)
 
     def nextState(self, state):
         if state == StateEnums.PREPARE_TO_PLAY:
@@ -36,10 +37,14 @@ class SoccerTask:
             self.currentState = WanderForBall()
         elif state == StateEnums.FOLLOW_BALL:
             self.currentState = FollowBall()
+        elif state == StateEnums.APPROACH_BALL:
+            self.currentState = ApproachBall()
         elif state == StateEnums.ALIGN_BALL_WITH_GOAL:
             self.currentState = AlignBallWithGoal()
         elif state == StateEnums.KICK_BALL:
             self.currentState = KickBall()
+        elif state == StateEnums.DRIBBLE_BALL:
+            self.currentState = DribbleBall()
 
     def run(self):
         self.__stopped = False
