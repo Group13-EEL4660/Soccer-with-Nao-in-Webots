@@ -28,7 +28,6 @@ class TemplateMatchingObjectDetector():
         result = self.getResults(image, objectString)
         threshold = self.queryThresholdDict[objectString][1]
         squareArea = image.shape[1] * image.shape[0]
-        print "Square area = " + str(squareArea)
         # Iterate through the results and count the number
         # of pixels that are above the threshold
         count = 0

@@ -8,7 +8,6 @@ class PrepareToPlay:
         self.__postureID = 0
 
     def run(self, parent):
-        print parent.motion.getRobotPosition(False)[2]
         print("PrepareToPlay")
         if self.__hasStarted is False:
             self.__wakeUpID = parent.motion.post.wakeUp()

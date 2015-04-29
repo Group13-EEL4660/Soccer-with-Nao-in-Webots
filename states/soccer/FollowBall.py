@@ -7,9 +7,12 @@ class FollowBall:
 
     def run(self, parent):
         print("Follow Ball")
+        topCameraObstacleLoc = parent.imageProcessor.objectLocationInCamera(0, "Obstacle")
+        if topCameraObstacleLoc is not None:
+            # Avoid the obstacle
+            parent.nextState(StateEnums.AVOID_OBSTACLE)
         # Check if the ball is in the top camera
         topCameraBallLoc = parent.imageProcessor.objectLocationInCamera(0, "Ball")
-
         if topCameraBallLoc is not None:
             anglesToBall = parent.imageProcessor.videoDevice\
                 .getAngularPositionFromImagePosition(0, [topCameraBallLoc[0], topCameraBallLoc[1]])

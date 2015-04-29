@@ -6,6 +6,7 @@ from states.soccer.ApproachBall import ApproachBall
 from states.soccer.AlignBallWithGoal import AlignBallWithGoal
 from states.soccer.KickBall import KickBall
 from states.soccer.DribbleBall import DribbleBall
+from states.soccer.AvoidObstacle import AvoidObstacle
 import time
 
 
@@ -45,6 +46,8 @@ class SoccerTask:
             self.currentState = KickBall()
         elif state == StateEnums.DRIBBLE_BALL:
             self.currentState = DribbleBall()
+        elif state == StateEnums.AVOID_OBSTACLE:
+            self.currentState = AvoidObstacle()
 
     def run(self):
         self.__stopped = False

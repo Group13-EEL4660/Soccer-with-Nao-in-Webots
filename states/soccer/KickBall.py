@@ -10,14 +10,15 @@ class KickBall:
         self.__yDiffThreshold = 0.208
         self.__postureID = None
         self.__initDone = False
+        self.__footNormPixelLoc = (0.25, 0.7)
 
     def run(self, parent):
         print "Kick Ball"
         parent.motion.setAngles("HeadPitch", 0.5, 1.0)
         ballLocation = parent.imageProcessor.objectLocationInCamera(1, "Ball")
         if self.__initDone is False and ballLocation is not None:
-            diffX = 0.25 - ballLocation[0]
-            diffY = 2/3.0 - ballLocation[1]
+            diffX = self.__footNormPixelLoc[0] - ballLocation[0]
+            diffY = self.__footNormPixelLoc[1] - ballLocation[1]
 
             # Line up with ball horizontally first, then vertically. Once both are lined up, then kick.
             if abs(diffX) >= self.__xDiffThreshold:
@@ -26,7 +27,7 @@ class KickBall:
                 parent.motion.moveToward(0.0, relativeVelY, 0.0)
             elif abs(diffY) >= self.__yDiffThreshold:
                 # Move slowly vertically
-                relativeVelX = (diffY / abs(diffY)) * 0.8
+                relativeVelX = (diffY / abs(diffY)) * 0.6
                 parent.motion.moveToward(relativeVelX, 0.0, 0.0)
             else:
                 parent.motion.stopMove()
@@ -35,6 +36,7 @@ class KickBall:
         elif self.__initDone and parent.robotPosture.isRunning(self.__postureID) is False:
             # It is finished getting into standing posture, so now kick the ball
             self.kick(parent.motion)
+            parent.robotPosture.goToPosture("StandInit", 0.5)
             parent.nextState(StateEnums.WANDER_FOR_BALL)
 
     def shift_weight(self, use_sensor_values, motion_proxy):

@@ -1,5 +1,5 @@
-import vision_definitions
 from StateEnums import StateEnums
+import cv2
 
 
 class WanderForBall:
@@ -14,7 +14,7 @@ class WanderForBall:
             # Check if the ball is in the bottom camera's view
             bottomCameraBallLoc = parent.imageProcessor.objectLocationInCamera(1, "Ball")
             if bottomCameraBallLoc is None:
-                parent.motion.moveToward(0.0, 0.0, -1.0, [["Frequency", 1.0]])
+                parent.motion.moveToward(0.0, 0.0, -1.0)
             else:
                 parent.motion.stopMove()
                 parent.nextState(StateEnums.APPROACH_BALL)
