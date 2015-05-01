@@ -10,3 +10,4 @@ class StateEnums(Enum):
     KICK_BALL = 5
     DRIBBLE_BALL = 6
     AVOID_OBSTACLE = 7
+    DEFEND_GOAL = 8

@@ -7,6 +7,7 @@ from states.soccer.AlignBallWithGoal import AlignBallWithGoal
 from states.soccer.KickBall import KickBall
 from states.soccer.DribbleBall import DribbleBall
 from states.soccer.AvoidObstacle import AvoidObstacle
+from states.soccer.DefendGoal import DefendGoal
 import time
 
 
@@ -15,13 +16,13 @@ class SoccerTask:
                  imageProcessor,
                  motion,
                  robotPosture,
-                 goalPosition,
+                 position,
                  startState=PrepareToPlay()):
         self.imageProcessor = imageProcessor
         self.motion = motion
         self.robotPosture = robotPosture
-        self.goalPosition = goalPosition
         self.currentState = startState
+        self.position = position
         self.__stopped = False
         # Subscribe to needed camera feeds
         self.imageProcessor.subscribe(0)
@@ -48,6 +49,8 @@ class SoccerTask:
             self.currentState = DribbleBall()
         elif state == StateEnums.AVOID_OBSTACLE:
             self.currentState = AvoidObstacle()
+        elif state == StateEnums.DEFEND_GOAL:
+            self.currentState = DefendGoal()
 
     def run(self):
         self.__stopped = False
