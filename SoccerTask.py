@@ -17,7 +17,7 @@ class SoccerTask:
                  motion,
                  robotPosture,
                  position,
-                 startState=PrepareToPlay()):
+                 startState):
         self.imageProcessor = imageProcessor
         self.motion = motion
         self.robotPosture = robotPosture

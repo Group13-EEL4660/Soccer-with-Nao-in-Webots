@@ -7,7 +7,7 @@ class AvoidObstacle:
         pass
 
     def run(self, parent):
-        print "Avoid Obstacle"
+        #print "Avoid Obstacle"
         obstacleLocation = parent.imageProcessor.objectLocationInCamera(0, "Obstacle")
         if obstacleLocation is None:
                 parent.nextState(StateEnums.FOLLOW_BALL)

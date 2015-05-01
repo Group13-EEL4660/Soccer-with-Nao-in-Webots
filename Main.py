@@ -6,6 +6,7 @@ from TemplateMatchingObjectDetector import TemplateMatchingObjectDetector
 from naoqi import ALProxy
 import cv2
 from SoccerPositions import SoccerPositions
+from states.soccer.PrepareToPlay import PrepareToPlay
 
 
 def main():
@@ -26,7 +27,8 @@ def main():
             ),
             ALProxy("ALMotion", "127.0.0.1", 9560),
             ALProxy("ALRobotPosture", "127.0.0.1", 9560),
-            SoccerPositions.OFFENSE
+            SoccerPositions.OFFENSE,
+            PrepareToPlay()
         )
     )
 
@@ -42,7 +44,8 @@ def main():
             ),
             ALProxy("ALMotion", "127.0.0.1", 9559),
             ALProxy("ALRobotPosture", "127.0.0.1", 9559),
-            SoccerPositions.DEFENSE
+            SoccerPositions.DEFENSE,
+            PrepareToPlay()
         )
     )
 

@@ -9,7 +9,7 @@ class DribbleBall:
         self.__endTime = None
 
     def run(self, parent):
-        print "Dribble Ball"
+        #print "Dribble Ball"
         if self.__initDone is False:
             # Walk forward into the ball
             parent.motion.moveToward(1.0, 0.0, 0.0)

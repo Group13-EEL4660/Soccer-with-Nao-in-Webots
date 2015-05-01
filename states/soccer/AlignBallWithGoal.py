@@ -6,15 +6,14 @@ class AlignBallWithGoal:
         self.__isRotationSet = False
         self.__alignedWithGoal = False
         self.__rotation = 0.19
-        self.__goalKickPixelPercent = 0.37
+        self.__goalKickPixelPercent = 0.4
 
     def run(self, parent):
-        print "Aligning with ball"
+        #print "Aligning with ball"
         # When the goal is in the center of the screen, then stop rotating
         topCameraImage = parent.imageProcessor.getImageFromCamera(0)
         goalLocation = parent.imageProcessor.objectLocationInImage(topCameraImage, "Goal", True)
         if goalLocation is not None:
-            print "Goal in sight. Location = " + str(goalLocation)
             # Align the goal in the center of the image
             anglesToGoal = parent.imageProcessor.videoDevice\
                 .getAngularPositionFromImagePosition(0, [goalLocation[0], goalLocation[1]])
@@ -24,7 +23,6 @@ class AlignBallWithGoal:
                 # Rotate towards goal
                 self.rotateAroundBall(parent.motion, -anglesToGoal[0])
         elif self.__isRotationSet is False:
-            print "Searching for goal"
             self.searchForGoal(parent.motion)
 
     def rotateAroundBall(self, motionProxy, robotYawAngle):

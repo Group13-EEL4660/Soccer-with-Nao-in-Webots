@@ -7,7 +7,7 @@ class WanderForBall:
         pass
 
     def run(self, parent):
-        print("WanderForBall")
+        #print("WanderForBall")
         # Check if the ball is in the top camera
         topCameraBallLoc = parent.imageProcessor.objectLocationInCamera(0, "Ball")
         if topCameraBallLoc is None:

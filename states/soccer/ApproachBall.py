@@ -6,7 +6,7 @@ class ApproachBall:
         pass
 
     def run(self, parent):
-        print("Approach Ball")
+        #print("Approach Ball")
         topCameraObstacleLoc = parent.imageProcessor.objectLocationInCamera(0, "Obstacle")
         if topCameraObstacleLoc is not None:
             # Avoid the obstacle

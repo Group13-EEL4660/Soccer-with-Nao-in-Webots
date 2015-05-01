@@ -13,7 +13,7 @@ class KickBall:
         self.__footNormPixelLoc = (0.25, 0.7)
 
     def run(self, parent):
-        print "Kick Ball"
+        #print "Kick Ball"
         parent.motion.setAngles("HeadPitch", 0.5, 1.0)
         ballLocation = parent.imageProcessor.objectLocationInCamera(1, "Ball")
         if self.__initDone is False and ballLocation is not None:

@@ -10,8 +10,7 @@ class PrepareToPlay:
         self.count = 0
 
     def run(self, parent):
-        print("PrepareToPlay")
-        print self.count
+        #print self.count
         self.count += 1
         if self.__hasStarted is False:
             self.__wakeUpID = parent.motion.post.wakeUp()
